@@ -1,0 +1,12 @@
+<div class="tracker-container">
+  <h2>GPS Location Tracker</h2>
+  <input [(ngModel)]="wmUniqueId" placeholder="Enter your wmUniqueId" />
+  <button (click)="getCurrentLocation()">Get & Send Location</button>
+
+  <div *ngIf="latitude && longitude">
+    <p><strong>Latitude:</strong> {{ latitude }}</p>
+    <p><strong>Longitude:</strong> {{ longitude }}</p>
+  </div>
+
+  <p class="error" *ngIf="error">{{ error }}</p>
+</div>
