@@ -33,7 +33,6 @@ export class GpsTrackerComponent {
     }
   }
 
-      this.http.post('http://localhost:4040/api/v1/location/update', payload)
   sendLocationToBackend(): void {
       if (this.latitude !== null && this.longitude !== null && this.wmUniqueId) {
         const payload = {
