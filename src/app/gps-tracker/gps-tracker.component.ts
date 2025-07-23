@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-gps-tracker',
@@ -33,18 +33,26 @@ export class GpsTrackerComponent {
     }
   }
 
-  sendLocationToBackend() {
-    if (this.latitude !== null && this.longitude !== null) {
-      const payload = {
-        wmUniqueId: this.wmUniqueId,
-        latitude: this.latitude,
-        longitude: this.longitude
-      };
       this.http.post('http://localhost:4040/api/v1/location/update', payload)
+  sendLocationToBackend(): void {
+      if (this.latitude !== null && this.longitude !== null && this.wmUniqueId) {
+        const payload = {
+          wmUniqueId: this.wmUniqueId,
+          latitude: Number(this.latitude),
+          longitude: Number(this.longitude)
+        };
+        
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        this.http.put('http://localhost:4040/api/v1/service/rider/current-location', payload, { headers })
         .subscribe({
           next: () => alert('Location sent successfully!'),
-          error: () => alert('Failed to send location.')
+          error: (error) => {
+            console.error('Failed to send location:', error);
+            alert('Failed to send location.');
+          }
         });
+      } else {
+        alert('Missing coordinates or user ID');
+      }
     }
-  }
 }
