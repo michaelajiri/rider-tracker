@@ -42,7 +42,7 @@ export class GpsTrackerComponent {
         };
         
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-        this.http.put('http://localhost:4040/api/v1/service/rider/current-location', payload, { headers })
+        this.http.put('http://localhost:4040/api/v1/service/riders/current-location', payload, { headers })
         .subscribe({
           next: () => alert('Location sent successfully!'),
           error: (error) => {
